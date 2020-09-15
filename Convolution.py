@@ -1,36 +1,34 @@
 import numpy
-import cv2
+import cv2 as cv
 import matplotlib.pyplot as plt
 
-def conv_helper(fragment, kernel):
-    """ multiplica 2 matices y devuelve su suma"""
-    
-    f_row, f_col = fragment.shape
-    k_row, k_col = kernel.shape 
-    result = 0.0
-    for row in range(f_row):
-        for col in range(f_col):
-            result += fragment[row,col] *  kernel[row,col]
-    return result
+image = cv.imread("sample.png")
+image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
 
-def convolution(image, kernel):
-    """Aplica una convolucion sin padding (valida) de una dimesion 
-    y devuelve la matriz resultante de la operación
-    """
+kernelx = numpy.array(([-1,0,1],[-2,0,2],[-1,0,1]),numpy.float32)
+kernely = numpy.array(([-1,-2,-1],[0,0,0],[1,2,1]),numpy.float32)
 
-    image_row, image_col = image.shape #asigna alto y ancho de la imagen 
-    kernel_row, kernel_col = kernel.shape #asigna alto y ancho del filtro
-   
-    output = numpy.zeros(image.shape) #matriz donde guardo el resultado
-   
-    for row in range(image_row):
-        for col in range(image_col):
-                output[row, col] = conv_helper(
-                                    image[row:row + kernel_row, 
-                                    col:col + kernel_col],kernel)
-             
-    plt.imshow(output, cmap='gray')
-    plt.title("Output Image using {}X{} Kernel".format(kernel_row, kernel_col))
-    plt.show()
- 
-    return output
+kernel = numpy.array(([2,4,2],[4,8,4],[2,4,2]),numpy.float32)
+
+outputMx = cv.filter2D(image, -1, kernelx)
+outputMy = cv.filter2D(image, -1, kernely)
+
+output = cv.filter2D(image, -1, kernel)
+
+plt.subplot(2,2,1)
+plt.imshow(image)
+plt.title('Original Image')
+
+plt.subplot(2,2,2)
+plt.imshow(outputMx)
+plt.title("Filtered Image X")
+
+plt.subplot(2,2,3)
+plt.imshow(outputMy)
+plt.title("Filtered Image Y")
+
+plt.subplot(2,2,4)
+plt.imshow(output)
+plt.title("Filtered Image XxY")
+
+plt.savefig('out.png')
