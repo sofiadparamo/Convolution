@@ -23,26 +23,25 @@ image = cv.imread("sample.jpg")
 
 kernelX = numpy.array(([-1,0,1],[-2,0,2],[-1,0,1]),numpy.float32)
 kernelY = numpy.array(([-1,-2,-1],[0,0,0],[1,2,1]),numpy.float32)
-#kernel = numpy.array(([0,0,0],[0,1,0],[0,0,0]),numpy.float32)
+# kernel = numpy.array(([0,0,0],[0,1,0],[0,0,0]),numpy.float32)
 
 image_row, image_col, image_chan = image.shape
 kernelX_row, kernelX_col = kernelX.shape
 kernelY_row, kernelY_col = kernelY.shape
 
-outputX = numpy.zeros(image.shape)
-outputY = numpy.zeros(image.shape)
+outputX = numpy.zeros((image_row,image_col))
+outputY = numpy.zeros((image_row,image_col))
 
-for row in range(image_row):
-    for col in range(image_col):
-        outputX[row,col,0] = conv_helper(image[row-1:row + 1, col-1:col + 1,0], kernelX)
-        outputX[row,col,1] = conv_helper(image[row-1:row + 1, col-1:col + 1,1], kernelX)
-        outputX[row,col,2] = conv_helper(image[row-1:row + 1, col-1:col + 1,2], kernelX)
+print(image_row)
 
-for row in range(image_row):
-    for col in range(image_col):
-        outputY[row,col,0] = conv_helper(image[row-1:row + 1, col-1:col + 1,0], kernelY)
-        outputY[row,col,1] = conv_helper(image[row-1:row + 1, col-1:col + 1,1], kernelY)
-        outputY[row,col,2] = conv_helper(image[row-1:row + 1, col-1:col + 1,2], kernelY)
+for row in range(image_row-1):
+    for col in range(image_col-1):
+        outputX[row+1,col+1] = conv_helper(image[row:row + kernelX_row, col:col + kernelX_col,0], kernelX)
+
+for row in range(image_row-1):
+    for col in range(image_col-1):
+        outputY[row+1,col+1] = conv_helper(image[row:row + kernelY_row, col:col + kernelY_col,0], kernelY)
+        
 
 output = cv.add(outputX,outputY)
 

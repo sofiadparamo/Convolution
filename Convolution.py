@@ -39,9 +39,12 @@ else:
             continue
         if frame is None:
             continue
+            
+        frame = cv.medianBlur(frame,5)
         
         kernelx = numpy.array(([-1,0,1],[-2,0,2],[-1,0,1]),numpy.float32)
         kernely = numpy.array(([-1,-2,-1],[0,0,0],[1,2,1]),numpy.float32)
+        
         
         outputx = cv.filter2D(frame, -1, kernelx)
         outputy = cv.filter2D(frame, -1, kernely)
