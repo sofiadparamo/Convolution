@@ -1,8 +1,11 @@
 import numpy 
-import cv2 as cv
 import argparse
 import os
 import time
+import dlib
+import cv2 as cv
+from math import hypot
+from face import face_tracker
 
 # Descripción para argumentos del script
 parser = argparse.ArgumentParser(description = 'Image Convolution')
@@ -33,6 +36,17 @@ else: # Si el arguemtno "file" está en blanco
     script_start_time = time.time() # Inicializacion del cronometro del programa
     
     vid = cv.VideoCapture(int(args["cameraSource"])) # Tomar control de la camara 
+    
+    #Loading Camera and Nose image and Creating mask
+    l_image = cv.imread("lightning_emoji.png")
+    success, frame = vid.read()
+    rens = frame.shape[1]
+    cols = frame.shape[0]
+    face_mask = numpy.zeros((rens,cols), numpy.uint8)
+
+    #Loading Face Detector
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
       
     while(vid.isOpened()): # Mientras la camara este en uso
         success, frame = vid.read() # Capturar el frame de la camara
@@ -45,11 +59,11 @@ else: # Si el arguemtno "file" está en blanco
         if(blur): # Si blur es verdadero
             frame = cv.medianBlur(frame, 5) # Aplicar el efecto de Kernel de la mediana para reducir el ruido
         
-        if(variant % 3 == 0): # Imagen original
+        if(variant % 4 == 0): # Imagen original
             kernel = numpy.array(([0, 0, 0], [0, 1, 0], [0, 0, 0]), numpy.float32) # Sin tomar en cuenta pixeles aledaños
             output = cv.filter2D(frame, -1, kernel) # Aplicar Kernel de identidad en la imagen
-            
-        elif(variant % 3 == 1): # Convolucion, operador Sobel
+            output = cv.putText(output,'Original',(20,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,0),2)
+        elif(variant % 4 == 1): # Convolucion, operador Sobel
             # Toma en cuenta los piexeles de derecha e izquierda, y los resta
             kernelx = numpy.array(([-1, 0, 1], [-2, 0, 2], [-1, 0, 1]), numpy.float32)
             # Toma en cuenta los piexeles de arriba y abajo, y los resta
@@ -60,11 +74,39 @@ else: # Si el arguemtno "file" está en blanco
             outputy = cv.filter2D(frame, -1, kernely)
             
             output = cv.add(outputx, outputy) # Suma aritmetica de las imagenes
+            output = cv.putText(output,'Sobel',(20,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (255,255,255),2)
             
-        elif(variant % 3 == 2): # Aumentar la saturacion de la imagen
+        elif(variant % 4 == 2): # Aumentar la saturacion de la imagen
             kernel = numpy.array(([0, 1, 0], [1, 1, 1], [0, 1, 0]), numpy.float32) # Satura el pixel del centro con los pixeles aledaños
             output = cv.filter2D(frame, -1, kernel) # Aplicar filtro de saturación
+            output = cv.putText(output,'Saturacion',(20,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,0),2)
+            
+        else:
+            face_mask.fill(0)
+            gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+            faces = detector(frame)
+            output = face_tracker(frame, l_image,rens,cols,face_mask, detector, predictor, gray_frame, faces)
+            output = cv.putText(output,'Rayito emprendedor',(20,30), cv.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,0),2)
+            #print(output.shape)
+        
+        output = cv.putText(output,'Espacio - Cambiar filtro',(18,cols-18), cv.FONT_HERSHEY_PLAIN, 1, (0,0,0),1)
+        output = cv.putText(output,'Espacio - Cambiar filtro',(20,cols-20), cv.FONT_HERSHEY_PLAIN, 1, (255,255,255),1)
+        
+        output = cv.putText(output,'B - Reduccion de ruido',(18,cols-38), cv.FONT_HERSHEY_PLAIN, 1, (0,0,0),1)
+        
+        if(blur):
+            output = cv.putText(output,'B - Reduccion de ruido',(20,cols-40), cv.FONT_HERSHEY_PLAIN, 1, (70,255,70),1)
+            
+        else:
+            output = cv.putText(output,'B - Reduccion de ruido',(20,cols-40), cv.FONT_HERSHEY_PLAIN, 1, (20,20,255),1)
       
+        if variant % 4 == 1:
+            output = cv.putText(output,'Esc - Salir',(rens-100,20), cv.FONT_HERSHEY_PLAIN, 1, (255,255,255),1)
+        else:
+            output = cv.putText(output,'Esc - Salir',(rens-100,20), cv.FONT_HERSHEY_PLAIN, 1, (0,0,0),1)
+        
+        if(frame is None):
+            continue
         cv.imshow('frame', output) # Mostrar output en una ventana adicional
         
         k = cv.waitKey(10)

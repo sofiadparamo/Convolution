@@ -19,6 +19,7 @@ La segunda parte de este proyecto consiste en la recreación de un track de cám
 - Open CV
 - NumPy
 - Argsparse
+- DLib
 
 ##### Ejemplos de ejecución:
 <img src="Examples/flor_original.jpg" data-canonical-src="Examples/flor_original.jpg" width="200" /></img>
@@ -29,6 +30,12 @@ La segunda parte de este proyecto consiste en la recreación de un track de cám
 <img src="Examples/flor_conv.png" data-canonical-src="Examples/flor_conv.png" width="200" /></img>
 
 *Ejemplo de Imagen con Convolución*
+
+
+<img src="Examples/ui.gif" data-canonical-src="Examples/ui.gif" width="200" /></img>
+
+*Previsualización de la interfaz de vídeo*
+
 
 ##### Licencia:
 Este proyecto está bajo la Licencia MIT.
