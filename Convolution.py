@@ -35,7 +35,7 @@ else: # Si el arguemtno "file" está en blanco
     blur = False
     script_start_time = time.time() # Inicializacion del cronometro del programa
     
-    vid = cv.VideoCapture(int(args["cameraSource"])) # Tomar control de la camara 
+    vid = cv.VideoCapture(int(args["cameraSource"]),cv.CAP_DSHOW) # Tomar control de la camara 
     
     #Loading Camera and Nose image and Creating mask
     l_image = cv.imread("lightning_emoji.png")
@@ -120,7 +120,6 @@ else: # Si el arguemtno "file" está en blanco
         elif k == 32: # Cuando se pulsa espacio
             variant+=1
             
-    
     vid.release() # Ceder el control de la camara
     cv.destroyAllWindows() # Terminar todas las ventanas
     
