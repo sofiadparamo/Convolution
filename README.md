@@ -48,5 +48,7 @@ El argumento `-i` recibe un número entero, el cual le indicará al programa de 
 
 El argumento `-f` recibe una ruta de archivo, el cual será convolucionado con sobel y guardado.
 
+Sin parámetros el programa abrirá la cámara 0 del ordenador y ejecutará la interfaz de usuario.
+
 ##### Licencia:
 Este proyecto es de código abierto y está bajo la [MIT License](https://choosealicense.com/licenses/mit/).
