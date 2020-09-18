@@ -32,7 +32,7 @@ La segunda parte de este proyecto consiste en la recreación de un track de cám
 *Ejemplo de Imagen con Convolución*
 
 
-<img src="Examples/ui.gif" data-canonical-src="Examples/ui.gif" width="200" /></img>
+<img src="Examples/ui.gif" data-canonical-src="Examples/ui.gif" width="800" /></img>
 
 *Previsualización de la interfaz de vídeo*
 
