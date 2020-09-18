@@ -38,6 +38,15 @@ La segunda parte de este proyecto consiste en la recreación de un track de cám
 
 *Previsualización de la interfaz de vídeo*
 
+##### Ejecución
+Comando:
+```python Convolution.py [-i camera_index] [-f file_path] [-h]```
+
+Para una descripción de los argumentos se puede usar `python Convolution.py -h`
+
+El argumento `-i` recibe un número entero, el cual le indicará al programa de qué dirección de hardware tomará la señal de vídeo, por defecto es 0
+
+El argumento `-f` recibe una ruta de archivo, el cual será convolucionado con sobel y guardado.
 
 ##### Licencia:
-Este proyecto está bajo la Licencia MIT.
+Este proyecto es de código abierto y está bajo la [MIT License](https://choosealicense.com/licenses/mit/).
