@@ -10,12 +10,14 @@ La segunda parte de este proyecto consiste en la recreación de un track de cám
 	+ Open Cv: `pip install opencv-python` 
 	+ Argsparse: `pip install argsparse`
 	+ DLib: `pip install dlib`
+		+ 64-bits Python runtime
+		+ CMake
 + Archivos de datos de reconocimiento facial (Colocar en la raiz del repositorio)
 	+ [Link](https://drive.google.com/file/d/17aeCg7M6E_tma23lD1kdVeWmp-kjC9hu/view?usp=sharing)
 
 
 ##### Construido con:
-- Python 3.8.5 
+- Python 3.8.5 x64
 - Open CV
 - NumPy
 - Argsparse
