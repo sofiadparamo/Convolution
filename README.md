@@ -1,5 +1,30 @@
-# Convolution
+### Proyecto Convolution
+La convolución es una forma matemática de combinar dos señales para formar una tercera. Es la técnica más importante en el procesamiento de señales digitales. 
+En este caso se aplicó este concepto para realizar un programa donde se detecta los bordes de una imagen e igualmente de un video en tiempo real, utilizando principalmente la libreria Open CV en Python.
 
-Image Convolution using OpenCV and Python.
+La segunda parte de este proyecto consiste en la recreación de un track de cámara para crear un filtro como los usados en la red social Instagram. Para ello se utilizó como base el código compartido por Sergio Canu en la plataforma py source.
 
-Created at ITESM.
+##### Pre-Requisitos:
+*Se necesita instalar previamente los paquetes de Open CV y Argsparse para el correcto funcionamiento del programa.* 
++ Entornos de escritorio estándar (Windows, macOS, casi cualquier distribución GNU / Linux)
+	+ Open Cv: `pip3 install opencv-python` 
+	+ Argsparse: `pip3 install argsparse`
+
+##### Construido con:
+- Python 3.8.5 
+- Open CV
+- NumPy
+- Argsparse
+
+##### Ejemplos de ejecución:
+<img src="Examples/flor_original.jpg" data-canonical-src="Examples/flor_original.jpg" width="200" /></img>
+
+*Ejemplo Imagen Original*
+
+
+<img src="Examples/flor_conv.png" data-canonical-src="Examples/flor_conv.png" width="200" /></img>
+
+*Ejemplo de Imagen con Convolución*
+
+##### Licencia:
+Este proyecto está bajo la Licencia MIT.
